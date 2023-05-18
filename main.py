@@ -2,21 +2,30 @@ import tkinter as tk
 from tkinter import ttk
 import random
 import time
+import tkinter.messagebox as messagebox
+
+is_animation_running = False
 
 def bubble_sort(arr):
     n = len(arr)
     for i in range(n-1):
         for j in range(n-i-1):
+            if not is_animation_running:
+                return
             if arr[j] > arr[j+1]:
                 arr[j], arr[j+1] = arr[j+1], arr[j]
                 update_display(arr)
                 time.sleep(speed_slider.get())
+                window.update()
 
 def quick_sort(arr, low, high):
     if low < high:
         pi = partition(arr, low, high)
         quick_sort(arr, low, pi-1)
         quick_sort(arr, pi+1, high)
+        update_display(arr)
+        time.sleep(speed_slider.get())
+        window.update()
 
 def partition(arr, low, high):
     pivot = arr[high]
@@ -27,6 +36,7 @@ def partition(arr, low, high):
             arr[i], arr[j] = arr[j], arr[i]
             update_display(arr)
             time.sleep(speed_slider.get())
+            window.update()
     arr[i+1], arr[high] = arr[high], arr[i+1]
     return i+1
 
@@ -45,11 +55,21 @@ def update_display(arr):
 def create_array():
     size = int(size_spinbox.get())
     elements = list(map(int, list_text.get("1.0", tk.END).split()))
-    return elements[:size]
+
+    if len(elements) < size:
+        messagebox.showerror("Hata", "Dizi boyutundan daha az sayı girdiniz.")
+        return None
+    elif len(elements) > size:
+        messagebox.showerror("Hata", "Dizi boyutundan daha fazla sayı girdiniz.")
+        return None
+
+    return elements
 
 def create_graph():
     graph_type = graph_combo.get()
     array = create_array()
+    if array is None:
+        return
     if graph_type == 'Scatter':
         scatter_graph(array)
     elif graph_type == 'Bar':
@@ -90,18 +110,32 @@ def stem_graph(arr):
     window.update_idletasks()
 
 def start_animation():
+    global is_animation_running
+    is_animation_running = True
+
     selected_algorithm = algorithm_combo.get()
     array = create_array()
+    if array is None:
+        return
     create_graph()
     if selected_algorithm == 'Bubble Sort':
         bubble_sort(array)
     elif selected_algorithm == 'Quick Sort':
         quick_sort(array, 0, len(array)-1)
-    # TODO: Start the animation
 
 def stop_animation():
-    # TODO: Stop the animation
-    pass
+    global is_animation_running
+    is_animation_running = False
+
+def continue_animation():
+    selected_algorithm = algorithm_combo.get()
+    array = create_array()
+    if array is None:
+        return
+    if selected_algorithm == 'Bubble Sort':
+        bubble_sort(array)
+    elif selected_algorithm == 'Quick Sort':
+        quick_sort(array, 0, len(array)-1)
 
 def reset():
     canvas.delete("all")
@@ -138,7 +172,7 @@ list_text.pack()
 speed_label = tk.Label(settings_frame, text='Sıralama Hızı:', font=('Arial', 12))
 speed_label.pack()
 
-speed_slider = ttk.Scale(settings_frame, from_=0.1, to=1.0, length=200, orient='horizontal')
+speed_slider = ttk.Scale(settings_frame, from_=1.0, to=0.1, length=200, orient='horizontal')
 speed_slider.pack()
 
 # Sorting Algorithms Section
@@ -157,7 +191,7 @@ graph_combo = ttk.Combobox(settings_frame, values=['Scatter', 'Bar', 'Stem'], fo
 graph_combo.current(0)
 graph_combo.pack()
 
-# Create, Start, Stop, Reset Buttons
+# Create, Start, Stop, Continue, Reset Buttons
 create_button = ttk.Button(settings_frame, text='Oluştur', command=create_graph)
 create_button.pack()
 
@@ -166,6 +200,9 @@ start_button.pack()
 
 stop_button = ttk.Button(settings_frame, text='Durdur', command=stop_animation)
 stop_button.pack()
+
+continue_button = ttk.Button(settings_frame, text='Devam Et', command=continue_animation)
+continue_button.pack()
 
 reset_button = ttk.Button(settings_frame, text='Sıfırla', command=reset)
 reset_button.pack()
