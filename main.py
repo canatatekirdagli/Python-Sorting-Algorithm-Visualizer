@@ -136,9 +136,9 @@ def partition(arr, low, high):
     return i + 1
 
 def update_display(arr):
-    canvas.delete(tk.ALL)
     bar_width = canvas_width // len(arr)
     bar_height_ratio = canvas_height / max(arr)
+    canvas.delete(tk.ALL)
     for i, value in enumerate(arr):
         x0 = i * bar_width
         y0 = canvas_height - value * bar_height_ratio
@@ -150,22 +150,23 @@ def update_display(arr):
 
 def create_array():
     size = int(size_spinbox.get())
-    if size < 3:
-        messagebox.showinfo("Bilgi", "En az 3 elemanlı bir liste oluşturun.")
-        return None
-
     list_values = list_text.get("1.0", tk.END).strip().split()
-    if len(list_values) != size:
-        messagebox.showinfo("Bilgi", "Lütfen listede belirtilen boyuta uygun sayıda eleman girin.")
-        return None
 
-    try:
-        array = [int(value) for value in list_values]
-        update_display(array)  # Eklenen satır
-        return array
-    except ValueError:
-        messagebox.showinfo("Bilgi", "Geçersiz elemanlar girdiniz. Lütfen sadece tam sayıları kullanın.")
-        return None
+    if not any(list_values):
+        array = random.sample(range(1, 100), size)
+    else:
+        if len(list_values) != size:
+            messagebox.showinfo("Bilgi", "Lütfen listede belirtilen boyuta uygun sayıda eleman girin.")
+            return None
+
+        try:
+            array = [int(value) for value in list_values]
+        except ValueError:
+            messagebox.showinfo("Bilgi", "Geçersiz elemanlar girdiniz. Lütfen sadece tam sayıları kullanın.")
+            return None
+
+    return array
+
 
 
 def create_graph():
@@ -244,6 +245,29 @@ def stop_animation():
     global is_animation_running
     is_animation_running = False
 
+def reset():
+    canvas.delete(tk.ALL)
+    list_text.delete("1.0", tk.END)
+    size_spinbox.delete(0, tk.END)
+    size_spinbox.insert(0, "1")
+    is_animation_running = False
+
+def continue_animation():
+    selected_algorithm = algorithm_combo.get()
+    array = create_array()
+    if array is None:
+        return
+
+    global is_animation_running
+    is_animation_running = True
+
+    if selected_algorithm == 'Bubble Sort':
+        bubble_sort(array)
+    elif selected_algorithm == 'Quick Sort':
+        quick_sort(array, 0, len(array)-1)
+
+    is_animation_running = False
+
 window = tk.Tk()
 window.title("Sıralama Animasyonu")
 window.geometry("800x600")
@@ -256,7 +280,7 @@ left_panel.pack(side=tk.LEFT, fill=tk.Y)
 # Boyut seçimi
 size_label = tk.Label(left_panel, text="Dizi Boyutu:")
 size_label.pack(pady=10)
-size_spinbox = tk.Spinbox(left_panel, from_=3, to=10, width=10)
+size_spinbox = tk.Spinbox(left_panel, from_=1, to=30)
 size_spinbox.pack()
 
 # Liste girişi
@@ -269,6 +293,7 @@ list_text.pack()
 graph_label = tk.Label(left_panel, text="Grafik Tipi:")
 graph_label.pack(pady=10)
 graph_combo = ttk.Combobox(left_panel, values=["Scatter", "Bar", "Stem"])
+graph_combo.set("Bar")  # Başlangıçta "Bar" seçili olarak gelmesi için
 graph_combo.pack()
 
 # Grafik oluşturma butonu
@@ -286,6 +311,7 @@ speed_slider.pack()
 algorithm_label = tk.Label(left_panel, text="Sıralama Algoritması:")
 algorithm_label.pack(pady=10)
 algorithm_combo = ttk.Combobox(left_panel, values=["Bubble Sort", "Selection Sort", "Insertion Sort", "Merge Sort", "Quick Sort"])
+algorithm_combo.set("Bubble Sort")  # Başlangıçta "Bubble Sort" seçili olarak gelmesi için
 algorithm_combo.pack()
 
 # Animasyon butonları
@@ -297,6 +323,17 @@ start_button.pack(side=tk.LEFT, padx=5)
 
 stop_button = tk.Button(button_frame, text="Durdur", width=10, command=stop_animation)
 stop_button.pack(side=tk.LEFT, padx=5)
+
+# Yeni panel
+bottom_panel = tk.Frame(left_panel, bg='white')
+bottom_panel.pack(pady=10)
+
+continue_button = ttk.Button(bottom_panel, text='Devam Et', command=continue_animation)
+continue_button.pack(side=tk.LEFT, padx=5)
+
+reset_button = ttk.Button(bottom_panel, text='Sıfırla', command=reset)
+reset_button.pack(side=tk.LEFT, padx=5)
+
 
 # Sağ panel
 right_panel = tk.Frame(window, bg='white')
