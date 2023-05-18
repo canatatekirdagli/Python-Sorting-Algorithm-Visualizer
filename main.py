@@ -14,9 +14,16 @@ def bubble_sort(arr):
                 return
             if arr[j] > arr[j+1]:
                 arr[j], arr[j+1] = arr[j+1], arr[j]
-                update_display(arr)
-                time.sleep(speed_slider.get())
-                window.update()
+
+        update_display(arr)
+        time.sleep(speed_slider.get())
+        window.update()
+
+    update_display(arr)  # Sıralama tamamlandığında display güncellenmeli
+    time.sleep(speed_slider.get())
+    window.update()
+
+
 
 def quick_sort(arr, low, high):
     if low < high:
@@ -26,6 +33,13 @@ def quick_sort(arr, low, high):
         update_display(arr)
         time.sleep(speed_slider.get())
         window.update()
+
+    elif low == 0 and high == len(arr)-1:
+        update_display(arr)  # Sıralama tamamlandığında display güncellenmeli
+        time.sleep(speed_slider.get())
+        window.update()
+
+
 
 def partition(arr, low, high):
     pivot = arr[high]
@@ -41,7 +55,7 @@ def partition(arr, low, high):
     return i+1
 
 def update_display(arr):
-    canvas.delete("all")
+    canvas.delete(tk.ALL)  # "canvas.delete("all")" yerine "canvas.delete(tk.ALL)" kullanılır
     bar_width = canvas_width // len(arr)
     bar_height_ratio = canvas_height / max(arr)
     for i, value in enumerate(arr):
@@ -50,7 +64,8 @@ def update_display(arr):
         x1 = (i + 1) * bar_width
         y1 = canvas_height
         canvas.create_rectangle(x0, y0, x1, y1, fill='sky blue', outline='white')
-    window.update_idletasks()
+    canvas.update_idletasks()
+
 
 def create_array():
     size = int(size_spinbox.get())
@@ -110,28 +125,35 @@ def stem_graph(arr):
     window.update_idletasks()
 
 def start_animation():
-    global is_animation_running
-    is_animation_running = True
-
     selected_algorithm = algorithm_combo.get()
     array = create_array()
     if array is None:
         return
+
+    global is_animation_running
+    is_animation_running = True
+
     create_graph()
+
     if selected_algorithm == 'Bubble Sort':
         bubble_sort(array)
     elif selected_algorithm == 'Quick Sort':
         quick_sort(array, 0, len(array)-1)
+
 
 def stop_animation():
     global is_animation_running
     is_animation_running = False
 
 def continue_animation():
+    global is_animation_running
+
     selected_algorithm = algorithm_combo.get()
     array = create_array()
     if array is None:
         return
+
+    is_animation_running = True
     if selected_algorithm == 'Bubble Sort':
         bubble_sort(array)
     elif selected_algorithm == 'Quick Sort':
