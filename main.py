@@ -145,6 +145,7 @@ def update_display(arr):
         x1 = (i + 1) * bar_width
         y1 = canvas_height
         canvas.create_rectangle(x0, y0, x1, y1, fill='sky blue', outline='white')
+        canvas.create_text(x0 + bar_width // 2, y0 - 10, text=str(value), fill='black')  # Yeni satır
     canvas.update_idletasks()
 
 def create_array():
@@ -160,10 +161,12 @@ def create_array():
 
     try:
         array = [int(value) for value in list_values]
+        update_display(array)  # Eklenen satır
         return array
     except ValueError:
         messagebox.showinfo("Bilgi", "Geçersiz elemanlar girdiniz. Lütfen sadece tam sayıları kullanın.")
         return None
+
 
 def create_graph():
     graph_type = graph_combo.get()
@@ -177,6 +180,7 @@ def create_graph():
     elif graph_type == 'Stem':
         stem_graph(array)
 
+    update_display(array)
 def scatter_graph(arr):
     canvas.delete("all")
     x_interval = canvas_width / len(arr)
@@ -189,15 +193,20 @@ def scatter_graph(arr):
 
 def bar_graph(arr):
     canvas.delete("all")
+    max_value = max(arr)
+    canvas_height_new = canvas_height + 100  # Y ekseni boyutunu sabit bir değer olarak ayarla
     bar_width = canvas_width // len(arr)
-    bar_height_ratio = canvas_height / max(arr)
+    bar_height_ratio = (canvas_height_new - 20) / max_value  # Y ekseni boyutunu 20 piksel kadar azalt
     for i, value in enumerate(arr):
         x0 = i * bar_width
-        y0 = canvas_height - value * bar_height_ratio
+        y0 = canvas_height_new - value * bar_height_ratio
         x1 = (i + 1) * bar_width
-        y1 = canvas_height
+        y1 = canvas_height_new
         canvas.create_rectangle(x0, y0, x1, y1, fill='sky blue', outline='white')
+        canvas.create_text(x0 + bar_width/2, y0 - 10, text=str(value), anchor=tk.N)
+    canvas.config(height=canvas_height_new)  # Canvas yüksekliğini güncelle
     window.update_idletasks()
+
 
 def stem_graph(arr):
     canvas.delete("all")
