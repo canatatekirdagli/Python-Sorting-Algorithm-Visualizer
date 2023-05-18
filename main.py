@@ -1,45 +1,126 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 import random
 import time
-import tkinter.messagebox as messagebox
 
 is_animation_running = False
 
 def bubble_sort(arr):
     n = len(arr)
-    for i in range(n-1):
-        for j in range(n-i-1):
+    for i in range(n - 1):
+        for j in range(0, n - i - 1):
             if not is_animation_running:
                 return
-            if arr[j] > arr[j+1]:
-                arr[j], arr[j+1] = arr[j+1], arr[j]
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+
+            update_display(arr)
+            time.sleep(speed_slider.get())
+            window.update()
+
+    update_display(arr)
+    time.sleep(speed_slider.get())
+    window.update()
+
+def selection_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        min_idx = i
+        for j in range(i + 1, n):
+            if not is_animation_running:
+                return
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
 
         update_display(arr)
         time.sleep(speed_slider.get())
         window.update()
 
-    update_display(arr)  # Sıralama tamamlandığında display güncellenmeli
+    update_display(arr)
     time.sleep(speed_slider.get())
     window.update()
 
+def insertion_sort(arr):
+    n = len(arr)
+    for i in range(1, n):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            if not is_animation_running:
+                return
+            arr[j + 1] = arr[j]
+            j -= 1
+            update_display(arr)
+            time.sleep(speed_slider.get())
+            window.update()
 
+        arr[j + 1] = key
+
+    update_display(arr)
+    time.sleep(speed_slider.get())
+    window.update()
+
+def merge_sort(arr):
+    if len(arr) > 1:
+        mid = len(arr) // 2
+        left_half = arr[:mid]
+        right_half = arr[mid:]
+
+        merge_sort(left_half)
+        merge_sort(right_half)
+
+        i = j = k = 0
+
+        while i < len(left_half) and j < len(right_half):
+            if not is_animation_running:
+                return
+            if left_half[i] < right_half[j]:
+                arr[k] = left_half[i]
+                i += 1
+            else:
+                arr[k] = right_half[j]
+                j += 1
+            k += 1
+
+        while i < len(left_half):
+            if not is_animation_running:
+                return
+            arr[k] = left_half[i]
+            i += 1
+            k += 1
+            update_display(arr)
+            time.sleep(speed_slider.get())
+            window.update()
+
+        while j < len(right_half):
+            if not is_animation_running:
+                return
+            arr[k] = right_half[j]
+            j += 1
+            k += 1
+            update_display(arr)
+            time.sleep(speed_slider.get())
+            window.update()
+
+        update_display(arr)
+        time.sleep(speed_slider.get())
+        window.update()
 
 def quick_sort(arr, low, high):
     if low < high:
         pi = partition(arr, low, high)
-        quick_sort(arr, low, pi-1)
-        quick_sort(arr, pi+1, high)
+        quick_sort(arr, low, pi - 1)
+        quick_sort(arr, pi + 1, high)
         update_display(arr)
         time.sleep(speed_slider.get())
         window.update()
 
-    elif low == 0 and high == len(arr)-1:
-        update_display(arr)  # Sıralama tamamlandığında display güncellenmeli
+    elif low == 0 and high == len(arr) - 1:
+        update_display(arr)
         time.sleep(speed_slider.get())
         window.update()
-
-
 
 def partition(arr, low, high):
     pivot = arr[high]
@@ -51,11 +132,11 @@ def partition(arr, low, high):
             update_display(arr)
             time.sleep(speed_slider.get())
             window.update()
-    arr[i+1], arr[high] = arr[high], arr[i+1]
-    return i+1
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
 
 def update_display(arr):
-    canvas.delete(tk.ALL)  # "canvas.delete("all")" yerine "canvas.delete(tk.ALL)" kullanılır
+    canvas.delete(tk.ALL)
     bar_width = canvas_width // len(arr)
     bar_height_ratio = canvas_height / max(arr)
     for i, value in enumerate(arr):
@@ -66,19 +147,23 @@ def update_display(arr):
         canvas.create_rectangle(x0, y0, x1, y1, fill='sky blue', outline='white')
     canvas.update_idletasks()
 
-
 def create_array():
     size = int(size_spinbox.get())
-    elements = list(map(int, list_text.get("1.0", tk.END).split()))
-
-    if len(elements) < size:
-        messagebox.showerror("Hata", "Dizi boyutundan daha az sayı girdiniz.")
-        return None
-    elif len(elements) > size:
-        messagebox.showerror("Hata", "Dizi boyutundan daha fazla sayı girdiniz.")
+    if size < 3:
+        messagebox.showinfo("Bilgi", "En az 3 elemanlı bir liste oluşturun.")
         return None
 
-    return elements
+    list_values = list_text.get("1.0", tk.END).strip().split()
+    if len(list_values) != size:
+        messagebox.showinfo("Bilgi", "Lütfen listede belirtilen boyuta uygun sayıda eleman girin.")
+        return None
+
+    try:
+        array = [int(value) for value in list_values]
+        return array
+    except ValueError:
+        messagebox.showinfo("Bilgi", "Geçersiz elemanlar girdiniz. Lütfen sadece tam sayıları kullanın.")
+        return None
 
 def create_graph():
     graph_type = graph_combo.get()
@@ -133,100 +218,85 @@ def start_animation():
     global is_animation_running
     is_animation_running = True
 
-    create_graph()
-
     if selected_algorithm == 'Bubble Sort':
         bubble_sort(array)
+    elif selected_algorithm == 'Selection Sort':
+        selection_sort(array)
+    elif selected_algorithm == 'Insertion Sort':
+        insertion_sort(array)
+    elif selected_algorithm == 'Merge Sort':
+        merge_sort(array)
     elif selected_algorithm == 'Quick Sort':
-        quick_sort(array, 0, len(array)-1)
+        quick_sort(array, 0, len(array) - 1)
 
+    is_animation_running = False
 
 def stop_animation():
     global is_animation_running
     is_animation_running = False
 
-def continue_animation():
-    global is_animation_running
-
-    selected_algorithm = algorithm_combo.get()
-    array = create_array()
-    if array is None:
-        return
-
-    is_animation_running = True
-    if selected_algorithm == 'Bubble Sort':
-        bubble_sort(array)
-    elif selected_algorithm == 'Quick Sort':
-        quick_sort(array, 0, len(array)-1)
-
-def reset():
-    canvas.delete("all")
-    size_spinbox.delete(0, tk.END)
-    list_text.delete("1.0", tk.END)
-
 window = tk.Tk()
-window.title('Sıralama Algoritması Paneli')
-window.geometry('1100x500')
+window.title("Sıralama Animasyonu")
+window.geometry("800x600")
+window.resizable(False, False)
 
-canvas_width = 800
-canvas_height = 400
+# Sol panel
+left_panel = tk.Frame(window, width=200, bg='white')
+left_panel.pack(side=tk.LEFT, fill=tk.Y)
 
-canvas = tk.Canvas(window, width=canvas_width, height=canvas_height, bg='white')
-canvas.pack(side=tk.LEFT, padx=20, pady=20)
-
-settings_frame = tk.Frame(window)
-settings_frame.pack(side=tk.RIGHT, padx=20, pady=20)
-
-# Size and List Input Section
-size_label = tk.Label(settings_frame, text='Liste Boyutu:', font=('Arial', 12))
-size_label.pack()
-
-size_spinbox = tk.Spinbox(settings_frame, from_=1, to=100, font=('Arial', 12))
+# Boyut seçimi
+size_label = tk.Label(left_panel, text="Dizi Boyutu:")
+size_label.pack(pady=10)
+size_spinbox = tk.Spinbox(left_panel, from_=3, to=10, width=10)
 size_spinbox.pack()
 
-list_label = tk.Label(settings_frame, text='Liste Elemanları:', font=('Arial', 12))
-list_label.pack()
-
-list_text = tk.Text(settings_frame, height=4, width=20, font=('Arial', 12))
+# Liste girişi
+list_label = tk.Label(left_panel, text="Dizi Elemanları:")
+list_label.pack(pady=10)
+list_text = tk.Text(left_panel, height=5, width=20)
 list_text.pack()
 
-# Speed Setting Section
-speed_label = tk.Label(settings_frame, text='Sıralama Hızı:', font=('Arial', 12))
-speed_label.pack()
-
-speed_slider = ttk.Scale(settings_frame, from_=1.0, to=0.1, length=200, orient='horizontal')
-speed_slider.pack()
-
-# Sorting Algorithms Section
-algorithm_label = tk.Label(settings_frame, text='Sıralama Algoritması:', font=('Arial', 12))
-algorithm_label.pack()
-
-algorithm_combo = ttk.Combobox(settings_frame, values=['Bubble Sort', 'Quick Sort'], font=('Arial', 12))
-algorithm_combo.current(0)
-algorithm_combo.pack()
-
-# Graph Types Section
-graph_label = tk.Label(settings_frame, text='Grafik Tipi:', font=('Arial', 12))
-graph_label.pack()
-
-graph_combo = ttk.Combobox(settings_frame, values=['Scatter', 'Bar', 'Stem'], font=('Arial', 12))
-graph_combo.current(0)
+# Grafik tipi seçimi
+graph_label = tk.Label(left_panel, text="Grafik Tipi:")
+graph_label.pack(pady=10)
+graph_combo = ttk.Combobox(left_panel, values=["Scatter", "Bar", "Stem"])
 graph_combo.pack()
 
-# Create, Start, Stop, Continue, Reset Buttons
-create_button = ttk.Button(settings_frame, text='Oluştur', command=create_graph)
-create_button.pack()
+# Grafik oluşturma butonu
+graph_button = tk.Button(left_panel, text="Grafik Oluştur", command=create_graph)
+graph_button.pack(pady=10)
 
-start_button = ttk.Button(settings_frame, text='Başlat', command=start_animation)
-start_button.pack()
+# Hız ayarı
+speed_label = tk.Label(left_panel, text="Animasyon Hızı:")
+speed_label.pack(pady=10)
+speed_slider = tk.Scale(left_panel, from_=0.1, to=1.0, resolution=0.1, orient=tk.HORIZONTAL, length=150)
+speed_slider.set(0.5)
+speed_slider.pack()
 
-stop_button = ttk.Button(settings_frame, text='Durdur', command=stop_animation)
-stop_button.pack()
+# Sıralama algoritması seçimi
+algorithm_label = tk.Label(left_panel, text="Sıralama Algoritması:")
+algorithm_label.pack(pady=10)
+algorithm_combo = ttk.Combobox(left_panel, values=["Bubble Sort", "Selection Sort", "Insertion Sort", "Merge Sort", "Quick Sort"])
+algorithm_combo.pack()
 
-continue_button = ttk.Button(settings_frame, text='Devam Et', command=continue_animation)
-continue_button.pack()
+# Animasyon butonları
+button_frame = tk.Frame(left_panel, bg='white')
+button_frame.pack(pady=10)
 
-reset_button = ttk.Button(settings_frame, text='Sıfırla', command=reset)
-reset_button.pack()
+start_button = tk.Button(button_frame, text="Başlat", width=10, command=start_animation)
+start_button.pack(side=tk.LEFT, padx=5)
+
+stop_button = tk.Button(button_frame, text="Durdur", width=10, command=stop_animation)
+stop_button.pack(side=tk.LEFT, padx=5)
+
+# Sağ panel
+right_panel = tk.Frame(window, bg='white')
+right_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+
+# Çizim alanı
+canvas_width = 600
+canvas_height = 400
+canvas = tk.Canvas(right_panel, width=canvas_width, height=canvas_height, bg='white')
+canvas.pack(pady=20)
 
 window.mainloop()
