@@ -168,7 +168,6 @@ def create_array():
     return array
 
 
-
 def create_graph():
     graph_type = graph_combo.get()
     array = create_array()
@@ -181,15 +180,15 @@ def create_graph():
     elif graph_type == 'Stem':
         stem_graph(array)
 
-    update_display(array)
 def scatter_graph(arr):
     canvas.delete("all")
     x_interval = canvas_width / len(arr)
-    y_interval = canvas_height / max(arr)
+    y_ratio = canvas_height / max(arr)
+    radius = min(x_interval, y_ratio) / 4  # Dairelerin yarıçapı
     for i, value in enumerate(arr):
-        x = i * x_interval
-        y = canvas_height - value * y_interval
-        canvas.create_oval(x, y, x, y, width=3, fill='sky blue')
+        x = i * x_interval + x_interval / 2
+        y = canvas_height - value * y_ratio / 2
+        canvas.create_oval(x - radius, y - radius, x + radius, y + radius, fill='sky blue')
     window.update_idletasks()
 
 def bar_graph(arr):
