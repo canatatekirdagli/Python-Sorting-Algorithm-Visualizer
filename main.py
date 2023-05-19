@@ -7,14 +7,17 @@ is_animation_running = False
 
 def bubble_sort(arr):
     n = len(arr)
+    comparison_count = 0  # Karşılaştırma sayısını takip etmek için bir sayaç
     for i in range(n - 1):
         for j in range(0, n - i - 1):
             if not is_animation_running:
                 return
+            comparison_count += 1  # Her bir karşılaştırma için sayacı artır
+
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
 
-            update_display2(arr, ["yellow" if x == j or x == j+1 else "red" for x in range(len(arr))])
+            update_display2(arr, ["yellow" if x == j or x == j + 1 else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
 
@@ -22,19 +25,24 @@ def bubble_sort(arr):
     time.sleep(speed_slider.get())
     window.update()
 
+    print("Karşılaştırma Sayısı (bubble_sort):", comparison_count)  # Karşılaştırma sayısını yazdır
+
 def selection_sort(arr):
     n = len(arr)
+    comparison_count = 0  # Karşılaştırma sayısını takip etmek için bir sayaç
     for i in range(n):
         min_idx = i
         for j in range(i + 1, n):
             if not is_animation_running:
                 return
+            comparison_count += 1  # Her bir karşılaştırma için sayacı artır
+
             if arr[j] < arr[min_idx]:
                 min_idx = j
 
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
 
-        update_display2(arr, ["yellow" if x == i or x == j else "red" for x in range(len(arr))])
+        update_display2(arr, ["yellow" if x == i or x == min_idx else "red" for x in range(len(arr))])
         time.sleep(speed_slider.get())
         window.update()
 
@@ -42,17 +50,22 @@ def selection_sort(arr):
     time.sleep(speed_slider.get())
     window.update()
 
+    print("Karşılaştırma Sayısı (selection_sort):", comparison_count)  # Karşılaştırma sayısını yazdır
+
 def insertion_sort(arr):
     n = len(arr)
+    comparison_count = 0  # Karşılaştırma sayısını takip etmek için bir sayaç
     for i in range(1, n):
         key = arr[i]
         j = i - 1
         while j >= 0 and arr[j] > key:
             if not is_animation_running:
                 return
+            comparison_count += 1  # Her bir karşılaştırma için sayacı artır
+
             arr[j + 1] = arr[j]
             j -= 1
-            update_display2(arr, ["yellow" if x == j-1 else "red" for x in range(len(arr))])
+            update_display2(arr, ["yellow" if x == j or x == j+1 else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
 
@@ -62,7 +75,11 @@ def insertion_sort(arr):
     time.sleep(speed_slider.get())
     window.update()
 
+    print("Karşılaştırma Sayısı (insertion_sort):", comparison_count)  # Karşılaştırma sayısını yazdır
+
 def merge_sort(arr):
+    comparison_count = 0  # Karşılaştırma sayısını takip etmek için bir sayaç
+
     if len(arr) > 1:
         mid = len(arr) // 2
         left_half = arr[:mid]
@@ -76,6 +93,8 @@ def merge_sort(arr):
         while i < len(left_half) and j < len(right_half):
             if not is_animation_running:
                 return
+            comparison_count += 1  # Her bir karşılaştırma için sayacı artır
+
             if left_half[i] < right_half[j]:
                 arr[k] = left_half[i]
                 i += 1
@@ -108,7 +127,11 @@ def merge_sort(arr):
         time.sleep(speed_slider.get())
         window.update()
 
+    print("Karşılaştırma Sayısı (merge_sort):", comparison_count)  # Karşılaştırma sayısını yazdır
+
 def quick_sort(arr, low, high):
+    comparison_count = 0  # Karşılaştırma sayısını takip etmek için bir sayaç
+
     if low < high:
         pi = partition(arr, low, high)
         quick_sort(arr, low, pi - 1)
@@ -117,10 +140,15 @@ def quick_sort(arr, low, high):
         time.sleep(speed_slider.get())
         window.update()
 
+        comparison_count += (high - low)  # Her bir bölme işlemi için (high - low) kadar karşılaştırma yapılır
+
     elif low == 0 and high == len(arr) - 1:
         update_display2(arr, ["yellow" if x == low else "red" for x in range(len(arr))])
         time.sleep(speed_slider.get())
         window.update()
+
+    print("Karşılaştırma Sayısı: (quick_sort)", comparison_count)  # Karşılaştırma sayısını yazdır
+
 
 def partition(arr, low, high):  # quick sort için parçalama işlemi kullanılan adımları gerçekleştirir.
     pivot = arr[high]
