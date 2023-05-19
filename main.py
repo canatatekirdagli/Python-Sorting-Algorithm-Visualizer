@@ -336,7 +336,7 @@ window.geometry("800x600")
 window.resizable(False, False)
 
 # Sol panel
-left_panel = tk.Frame(window, width=200, bg='white')
+left_panel = tk.Frame(window, width=200, bg='gray')
 left_panel.pack(side=tk.LEFT, fill=tk.Y)
 
 # Boyut seçimi
@@ -377,7 +377,7 @@ algorithm_combo.set("Bubble Sort")  # Başlangıçta "Bubble Sort" seçili olara
 algorithm_combo.pack()
 
 # Animasyon butonları
-button_frame = tk.Frame(left_panel, bg='white')
+button_frame = tk.Frame(left_panel, bg='gray')
 button_frame.pack(pady=10)
 
 start_button = tk.Button(button_frame, text="Başlat", width=10, command=start_animation)
@@ -387,7 +387,7 @@ stop_button = tk.Button(button_frame, text="Durdur", width=10, command=stop_anim
 stop_button.pack(side=tk.LEFT, padx=5)
 
 # Yeni panel
-bottom_panel = tk.Frame(left_panel, bg='white')
+bottom_panel = tk.Frame(left_panel, bg='gray')
 bottom_panel.pack(pady=10)
 
 continue_button = ttk.Button(bottom_panel, text='Devam Et', command=continue_animation)
