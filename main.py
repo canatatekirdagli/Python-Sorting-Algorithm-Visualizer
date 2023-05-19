@@ -7,12 +7,12 @@ is_animation_running = False
 
 def bubble_sort(arr):
     n = len(arr)
-    comparison_count = 0  # Karşılaştırma sayısını takip etmek için bir sayaç
+    comparison_count = 0
     for i in range(n - 1):
         for j in range(0, n - i - 1):
             if not is_animation_running:
                 return
-            comparison_count += 1  # Her bir karşılaştırma için sayacı artır
+            comparison_count += 1
 
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
@@ -29,13 +29,13 @@ def bubble_sort(arr):
 
 def selection_sort(arr):
     n = len(arr)
-    comparison_count = 0  # Karşılaştırma sayısını takip etmek için bir sayaç
+    comparison_count = 0
     for i in range(n):
         min_idx = i
         for j in range(i + 1, n):
             if not is_animation_running:
                 return
-            comparison_count += 1  # Her bir karşılaştırma için sayacı artır
+            comparison_count += 1
 
             if arr[j] < arr[min_idx]:
                 min_idx = j
@@ -54,14 +54,14 @@ def selection_sort(arr):
 
 def insertion_sort(arr):
     n = len(arr)
-    comparison_count = 0  # Karşılaştırma sayısını takip etmek için bir sayaç
+    comparison_count = 0
     for i in range(1, n):
         key = arr[i]
         j = i - 1
         while j >= 0 and arr[j] > key:
             if not is_animation_running:
                 return
-            comparison_count += 1  # Her bir karşılaştırma için sayacı artır
+            comparison_count += 1
 
             arr[j + 1] = arr[j]
             j -= 1
@@ -78,7 +78,7 @@ def insertion_sort(arr):
     print("Karşılaştırma Sayısı (insertion_sort):", comparison_count)  # Karşılaştırma sayısını yazdır
 
 def merge_sort(arr):
-    comparison_count = 0  # Karşılaştırma sayısını takip etmek için bir sayaç
+    comparison_count = 0
 
     if len(arr) > 1:
         mid = len(arr) // 2
@@ -127,7 +127,7 @@ def merge_sort(arr):
         time.sleep(speed_slider.get())
         window.update()
 
-    print("Karşılaştırma Sayısı (merge_sort):", comparison_count)  # Karşılaştırma sayısını yazdır
+    print("Karşılaştırma Sayısı (merge_sort):", comparison_count)
 
 def quick_sort(arr, low, high):
     comparison_count = 0  # Karşılaştırma sayısını takip etmek için bir sayaç
