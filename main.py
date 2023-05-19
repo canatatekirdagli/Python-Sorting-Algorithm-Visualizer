@@ -14,7 +14,7 @@ def bubble_sort(arr):
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
 
-            update_display(arr)
+            update_display2(arr, ["yellow" if x == j or x == j+1 else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
 
@@ -34,7 +34,7 @@ def selection_sort(arr):
 
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
 
-        update_display(arr)
+        update_display2(arr, ["yellow" if x == i or x == j else "red" for x in range(len(arr))])
         time.sleep(speed_slider.get())
         window.update()
 
@@ -52,7 +52,7 @@ def insertion_sort(arr):
                 return
             arr[j + 1] = arr[j]
             j -= 1
-            update_display(arr)
+            update_display2(arr, ["yellow" if x == j-1 else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
 
@@ -90,7 +90,7 @@ def merge_sort(arr):
             arr[k] = left_half[i]
             i += 1
             k += 1
-            update_display(arr)
+            update_display2(arr, ["yellow" if x == i else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
 
@@ -100,7 +100,7 @@ def merge_sort(arr):
             arr[k] = right_half[j]
             j += 1
             k += 1
-            update_display(arr)
+            update_display2(arr, ["yellow" if x == j else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
 
@@ -113,18 +113,19 @@ def quick_sort(arr, low, high):
         pi = partition(arr, low, high)
         quick_sort(arr, low, pi - 1)
         quick_sort(arr, pi + 1, high)
-        update_display(arr)
+        update_display2(arr, ["yellow" if x == low else "red" for x in range(len(arr))])
         time.sleep(speed_slider.get())
         window.update()
 
     elif low == 0 and high == len(arr) - 1:
-        update_display(arr)
+        update_display2(arr, ["yellow" if x == low else "red" for x in range(len(arr))])
         time.sleep(speed_slider.get())
         window.update()
 
 def partition(arr, low, high):
     pivot = arr[high]
     i = low - 1
+    update_display(arr)
     for j in range(low, high):
         if arr[j] < pivot:
             i += 1
@@ -134,6 +135,19 @@ def partition(arr, low, high):
             window.update()
     arr[i + 1], arr[high] = arr[high], arr[i + 1]
     return i + 1
+
+def update_display_qs(arr, low, high):
+    colorArray=[]
+    for i in range(arr):
+
+        if i >= low and i <= high:
+            colorArray.append("red")
+        else:
+            colorArray.append("gray")
+
+        if i == high:
+            colorArray[i] == 'orange'
+    return colorArray
 
 def update_display(arr):
     bar_width = canvas_width // len(arr)
@@ -146,6 +160,19 @@ def update_display(arr):
         y1 = canvas_height
         canvas.create_rectangle(x0, y0, x1, y1, fill='sky blue', outline='white')
         canvas.create_text(x0 + bar_width // 2, y0 - 10, text=str(value), fill='black')  # Yeni satır
+    canvas.update_idletasks()
+
+def update_display2(arr, colorArray):
+    bar_width = canvas_width // len(arr)
+    bar_height_ratio = canvas_height / max(arr)
+    canvas.delete(tk.ALL)
+    for i, value in enumerate(arr):
+        x0 = i * bar_width
+        y0 = canvas_height - value * bar_height_ratio
+        x1 = (i + 1) * bar_width
+        y1 = canvas_height
+        canvas.create_rectangle(x0, y0, x1, y1, fill = colorArray[i], outline = 'white')
+        canvas.create_text(x0 + bar_width // 2, y0 - 10, text = str(value), fill = 'black')  # Yeni satır
     canvas.update_idletasks()
 
 def create_array():
