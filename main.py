@@ -122,17 +122,16 @@ def quick_sort(arr, low, high):
         time.sleep(speed_slider.get())
         window.update()
 
-def partition(arr, low, high):
+def partition(arr, low, high):  # quick sort için parçalama işlemi kullanılan adımları gerçekleştirir.
     pivot = arr[high]
     i = low - 1
-    update_display(arr)
     for j in range(low, high):
         if arr[j] < pivot:
             i += 1
             arr[i], arr[j] = arr[j], arr[i]
-            update_display(arr)
-            time.sleep(speed_slider.get())
-            window.update()
+            update_display(arr)  # diziye yapılan değişiklikleri görsel olarak güncellemek için.
+            time.sleep(speed_slider.get())  # güncellemelerin belirli bir hızda gerçekleştirilmesi için.
+            window.update()   # GUI penceresinin güncellenmesini sağlar
     arr[i + 1], arr[high] = arr[high], arr[i + 1]
     return i + 1
 
@@ -211,12 +210,15 @@ def scatter_graph(arr):
     canvas.delete("all")
     x_interval = canvas_width / len(arr)
     y_ratio = canvas_height / max(arr)
-    radius = min(x_interval, y_ratio) / 4  # Dairelerin yarıçapı
+    fixed_radius = 12  # Sabit yarıçap değeri
     for i, value in enumerate(arr):
         x = i * x_interval + x_interval / 2
         y = canvas_height - value * y_ratio / 2
-        canvas.create_oval(x - radius, y - radius, x + radius, y + radius, fill='sky blue')
+        canvas.create_oval(x - fixed_radius, y - fixed_radius, x + fixed_radius, y + fixed_radius, fill='sky blue')
+        canvas.create_text(x, y, text=str(value), fill='black')
     window.update_idletasks()
+
+
 
 def bar_graph(arr):
     canvas.delete("all")
@@ -238,12 +240,16 @@ def bar_graph(arr):
 def stem_graph(arr):
     canvas.delete("all")
     x_interval = canvas_width / len(arr)
-    y_interval = canvas_height / max(arr)
+    y_ratio = canvas_height / max(arr)
     for i, value in enumerate(arr):
-        x = i * x_interval
-        y = canvas_height - value * y_interval
-        canvas.create_line(x, canvas_height, x, y, width=2)
+        x = i * x_interval + x_interval / 2
+        y = canvas_height - value * y_ratio / 2
+        canvas.create_line(x, canvas_height, x, y, fill='sky blue', width=2)
+        canvas.create_oval(x - 3, y - 3, x + 3, y + 3, fill='sky blue', outline='sky blue')
+        canvas.create_text(x, y - 10, text=str(value), fill='black')
     window.update_idletasks()
+
+
 
 def start_animation():
     selected_algorithm = algorithm_combo.get()
