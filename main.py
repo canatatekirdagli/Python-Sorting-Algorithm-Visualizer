@@ -75,11 +75,9 @@ def insertion_sort(arr):
     time.sleep(speed_slider.get())
     window.update()
 
-    print("Karşılaştırma Sayısı (insertion_sort):", comparison_count)  # Karşılaştırma sayısını yazdır
+    print("Karşılaştırma Sayısı (insertion_sort):", comparison_count)
 
 def merge_sort(arr):
-    comparison_count = 0
-
     if len(arr) > 1:
         mid = len(arr) // 2
         left_half = arr[:mid]
@@ -89,6 +87,7 @@ def merge_sort(arr):
         merge_sort(right_half)
 
         i = j = k = 0
+        comparison_count = 0  # Karşılaştırma sayısını takip etmek için bir sayaç
 
         while i < len(left_half) and j < len(right_half):
             if not is_animation_running:
@@ -109,7 +108,7 @@ def merge_sort(arr):
             arr[k] = left_half[i]
             i += 1
             k += 1
-            update_display2(arr, ["yellow" if x == i else "red" for x in range(len(arr))])
+            update_display2(arr, ["yellow" if x == i-1 else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
 
@@ -119,7 +118,7 @@ def merge_sort(arr):
             arr[k] = right_half[j]
             j += 1
             k += 1
-            update_display2(arr, ["yellow" if x == j else "red" for x in range(len(arr))])
+            update_display2(arr, ["yellow" if x == j-1 else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
 
@@ -127,27 +126,30 @@ def merge_sort(arr):
         time.sleep(speed_slider.get())
         window.update()
 
-    print("Karşılaştırma Sayısı (merge_sort):", comparison_count)
+        print("Karşılaştırma Sayısı:", comparison_count)  # Karşılaştırma sayısını yazdır
 
 def quick_sort(arr, low, high):
-    comparison_count = 0  # Karşılaştırma sayısını takip etmek için bir sayaç
+    comparison_count = 0
 
-    if low < high:
-        pi = partition(arr, low, high)
-        quick_sort(arr, low, pi - 1)
-        quick_sort(arr, pi + 1, high)
-        update_display2(arr, ["yellow" if x == low else "red" for x in range(len(arr))])
-        time.sleep(speed_slider.get())
-        window.update()
+    def _quick_sort(arr, low, high):
+        nonlocal comparison_count  # comparison_count değişkenini iç içe fonksiyon içinde kullanmak için nonlocal anahtar kelimesi kullanılır
 
-        comparison_count += (high - low)  # Her bir bölme işlemi için (high - low) kadar karşılaştırma yapılır
+        if low < high:
+            pi = partition(arr, low, high)
+            _quick_sort(arr, low, pi - 1)
+            _quick_sort(arr, pi + 1, high)
+            update_display2(arr, ["yellow" if x == low else "red" for x in range(len(arr))])
+            time.sleep(speed_slider.get())
+            window.update()
+            comparison_count += (high - low)  # Her bir bölme işlemi için (high - low) kadar karşılaştırma yapılır
 
-    elif low == 0 and high == len(arr) - 1:
-        update_display2(arr, ["yellow" if x == low else "red" for x in range(len(arr))])
-        time.sleep(speed_slider.get())
-        window.update()
+        elif low == 0 and high == len(arr) - 1:
+            update_display2(arr, ["yellow" if x == low else "red" for x in range(len(arr))])
+            time.sleep(speed_slider.get())
+            window.update()
 
-    print("Karşılaştırma Sayısı: (quick_sort)", comparison_count)  # Karşılaştırma sayısını yazdır
+    _quick_sort(arr, low, high)
+    print("Karşılaştırma Sayısı: (quick_sort)", comparison_count)
 
 
 def partition(arr, low, high):  # quick sort için parçalama işlemi kullanılan adımları gerçekleştirir.
