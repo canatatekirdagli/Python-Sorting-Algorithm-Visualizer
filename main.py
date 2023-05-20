@@ -7,17 +7,21 @@ is_animation_running = False
 comparison_label = None  # Karşılaştırma sayısı etiketi
 def bubble_sort(arr):
     global comparison_label  # Global olarak tanımlanan etiket değişkeni
-
+    global compx_label
     n = len(arr)
     comparison_count = 0
+
+    compx_label.config(text="Karmaşıklık Analizi: O(n^2)")
 
     if comparison_label is None:
         bottom_panel = tk.Frame(left_panel, bg='gray')
         bottom_panel.pack(pady=10)
         comparison_label = tk.Label(bottom_panel, text="Karşılaştırma Sayısı: 0")
         comparison_label.pack(side=tk.LEFT, padx=5)
+
     else:
         comparison_label.config(text="Karşılaştırma Sayısı: 0")  # Etiketin metnini sıfırla
+
 
     def update_comparison_label(count):
         comparison_label.config(text=f"Karşılaştırma Sayısı: {count}")
@@ -49,14 +53,19 @@ def bubble_sort(arr):
 
 def selection_sort(arr):
     global comparison_label  # Global olarak tanımlanan etiket değişkeni
+    global compx_label
+
+    compx_label.config(text="Karmaşıklık Analizi: O(n^2)")
 
     if comparison_label is None:
         bottom_panel = tk.Frame(left_panel, bg='gray')
         bottom_panel.pack(pady=10)
         comparison_label = tk.Label(bottom_panel, text="Karşılaştırma Sayısı: 0")
         comparison_label.pack(side=tk.LEFT, padx=5)
+
     else:
         comparison_label.config(text="Karşılaştırma Sayısı: 0")  # Etiketin metnini sıfırla
+
 
     n = len(arr)
     comparison_count = 0
@@ -95,13 +104,20 @@ def selection_sort(arr):
 
 def insertion_sort(arr):
     global comparison_label  # Global olarak tanımlanan etiket değişkeni
+    global compx_label
+
+    compx_label.config(text="Karmaşıklık Analizi: O(n^2)")
+
     if comparison_label is None:
         bottom_panel = tk.Frame(left_panel, bg='gray')
         bottom_panel.pack(pady=10)
         comparison_label = tk.Label(bottom_panel, text="Karşılaştırma Sayısı: 0")
         comparison_label.pack(side=tk.LEFT, padx=5)
+
     else:
         comparison_label.config(text="Karşılaştırma Sayısı: 0")  # Etiketin metnini sıfırla
+
+
 
     def update_comparison_label(count):
         comparison_label.config(text=f"Karşılaştırma Sayısı: {count}")
@@ -138,14 +154,20 @@ def merge_sort(arr):
     comparison_count = [0]
 
     global comparison_label
+    global compxlabel
+
+    compx_label.config(text="Karmaşıklık Analizi: O(n log(n))")
+
 
     if comparison_label is None:
         bottom_panel = tk.Frame(left_panel, bg='gray')
         bottom_panel.pack(pady=10)
         comparison_label = tk.Label(bottom_panel, text="Karşılaştırma Sayısı: 0")
         comparison_label.pack(side=tk.LEFT, padx=5)
+
     else:
         comparison_label.config(text="Karşılaştırma Sayısı: 0")
+
 
     def update_comparison_label(count):
         comparison_label.config(text=f"Karşılaştırma Sayısı: {count}")
@@ -206,6 +228,9 @@ def quick_sort(arr, low, high):
     comparison_count = 0
 
     global comparison_label
+    global compxlabel
+
+    compx_label.config(text="Karmaşıklık Analizi: O(n^2)")
 
     if comparison_label is None:
         bottom_panel = tk.Frame(left_panel, bg='gray')
@@ -214,6 +239,8 @@ def quick_sort(arr, low, high):
         comparison_label.pack(side=tk.LEFT, padx=5)
     else:
         comparison_label.config(text="Karşılaştırma Sayısı: 0")
+
+
 
     def update_comparison_label(count):
         comparison_label.config(text=f"Karşılaştırma Sayısı: {count}")
@@ -488,6 +515,11 @@ continue_button.pack(side=tk.LEFT, padx=5)
 reset_button = ttk.Button(bottom_panel, text='Sıfırla', command=reset)
 reset_button.pack(side=tk.LEFT, padx=5)
 
+# Karmaşıklık Analizi
+bottom_panel2 = tk.Frame(left_panel, bg='gray')
+bottom_panel2.pack(pady=10)
+compx_label = tk.Label(bottom_panel2, text="Karmaşıklık Analizi: ")
+compx_label.pack(side=tk.LEFT, padx=5)
 
 # Sağ panel
 right_panel = tk.Frame(window, bg='white')
