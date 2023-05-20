@@ -34,7 +34,7 @@ def bubble_sort(arr):
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
 
-            update_display2(arr, ["yellow" if x == j or x == j + 1 else "red" for x in range(len(arr))])
+            update_display2(arr, ["gray" if x == j or x == j + 1 else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
 
@@ -79,7 +79,7 @@ def selection_sort(arr):
 
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
 
-        update_display2(arr, ["yellow" if x == i or x == min_idx else "red" for x in range(len(arr))])
+        update_display2(arr, ["gray" if x == i or x == min_idx else "red" for x in range(len(arr))])
         time.sleep(speed_slider.get())
         window.update()
 
@@ -121,7 +121,7 @@ def insertion_sort(arr):
 
             arr[j + 1] = arr[j]
             j -= 1
-            update_display2(arr, ["yellow" if x == j or x == j+1 else "red" for x in range(len(arr))])
+            update_display2(arr, ["gray" if x == j or x == j+1 else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
             # Adım adım karşılaştırma sayısını güncelle ve ekrana yazdır
@@ -228,7 +228,7 @@ def quick_sort(arr, low, high):
             pi = partition(arr, low, high)
             _quick_sort(arr, low, pi - 1)
             _quick_sort(arr, pi + 1, high)
-            update_display2(arr, ["yellow" if x == low else "red" for x in range(len(arr))])
+            update_display(arr)
             time.sleep(speed_slider.get())
             window.update()
             comparison_count += (high - low)  # Her bir bölme işlemi için (high - low) kadar karşılaştırma yapılır
@@ -237,7 +237,7 @@ def quick_sort(arr, low, high):
             update_comparison_label(comparison_count)
 
         elif low == 0 and high == len(arr) - 1:
-            update_display2(arr, ["yellow" if x == low else "red" for x in range(len(arr))])
+            update_display2(arr, ["gray" if x == low else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
 
@@ -279,7 +279,7 @@ def update_display(arr):
         y0 = canvas_height - value * bar_height_ratio
         x1 = (i + 1) * bar_width
         y1 = canvas_height
-        canvas.create_rectangle(x0, y0, x1, y1, fill='sky blue', outline='white')
+        canvas.create_rectangle(x0, y0, x1, y1, fill='light green', outline='white')
         canvas.create_text(x0 + bar_width // 2, y0 - 10, text=str(value), fill='black')  # Yeni satır
     canvas.update_idletasks()
 
