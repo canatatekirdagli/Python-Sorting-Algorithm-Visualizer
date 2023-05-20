@@ -213,7 +213,7 @@ def merge_sort(arr):
                 k += 1
                 comparison_count[0] += 1
 
-            update_display(arr)
+            update_display2(arr, ["gray" if x == j else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
 
@@ -223,6 +223,8 @@ def merge_sort(arr):
     merge_sort_helper(arr)
 
     print("Toplam Karşılaştırma Sayısı: (merge_sort)", comparison_count[0])
+
+    update_display(arr)
 
 def quick_sort(arr, low, high):
     comparison_count = 0
@@ -255,7 +257,7 @@ def quick_sort(arr, low, high):
             pi = partition(arr, low, high)
             _quick_sort(arr, low, pi - 1)
             _quick_sort(arr, pi + 1, high)
-            update_display(arr)
+            update_display2(arr, ["gray" if x == low else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
             comparison_count += (high - low)  # Her bir bölme işlemi için (high - low) kadar karşılaştırma yapılır
@@ -271,6 +273,8 @@ def quick_sort(arr, low, high):
     _quick_sort(arr, low, high)
     print("Karşılaştırma Sayısı (quick_sort)", comparison_count)
 
+    update_display(arr)
+
 def partition(arr, low, high):  # quick sort için parçalama işlemi kullanılan adımları gerçekleştirir.
     pivot = arr[high]
     i = low - 1
@@ -278,7 +282,7 @@ def partition(arr, low, high):  # quick sort için parçalama işlemi kullanıla
         if arr[j] < pivot:
             i += 1
             arr[i], arr[j] = arr[j], arr[i]
-            update_display(arr)  # diziye yapılan değişiklikleri görsel olarak güncellemek için.
+            update_display2(arr, ["gray" if x == low else "red" for x in range(len(arr))])  # diziye yapılan değişiklikleri görsel olarak güncellemek için.
             time.sleep(speed_slider.get())  # güncellemelerin belirli bir hızda gerçekleştirilmesi için.
             window.update()   # GUI penceresinin güncellenmesini sağlar
     arr[i + 1], arr[high] = arr[high], arr[i + 1]
