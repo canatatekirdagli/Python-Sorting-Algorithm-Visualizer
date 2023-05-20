@@ -1,4 +1,4 @@
-# Python-Sorting-Algorithm-Visualizer
+# Python Sorting Algorithm Visualizer
 <a name="readme-top"></a>
 
 <!-- PROJECT LOGO -->
@@ -30,11 +30,11 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![PUZZLE-Game](resources/images/Main-SS.png "Main Menu Screen")
+![PSAV](resources/Main.png "Main Screen")
 
 This is a mandatory project of a Software Developing Laboratory-II class.
 
-We are trying to do a sorting algorithm visualizer that contains five popular sorting algorithms which are bubble sort, selection sort, insertion sort, merge sort and quick sort. User can enter the array manually or they can enter the number of array element.
+We are trying to do a sorting algorithm visualizer that contains five popular sorting algorithms which are bubble sort, selection sort, insertion sort, merge sort and quick sort. Users can enter the array manually or they can enter the number of array element and our program creates a random array. Also users can see the array with bar, scatter and stem charts.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -43,55 +43,32 @@ We are trying to do a sorting algorithm visualizer that contains five popular so
 These are what we used to develop our program:
 
 * Python
+* PyCharm IDE
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Installments
 
-* You need to install these packages.
-   ```sh
-   npm install image-to-slices
-   ```
-   ```sh
-   npm install canvas
-   ```
-   ```sh
-   npm install image-clipper
-   ```
-   ```sh
-   npm install image-size --save
-   ```
-   ```sh
-   npm install express
-   ```
-   ```sh
-   npm install sharp
-   ```
-   ```sh
-   npm install --save multer
-   ```
-   ```sh
-   npm install buffer
-   ```
-
+* You don't need anything extra to use this program.
+  
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-* User starts the game with "Oyna" button.
-![PUZZLE-Game](resources/images/Main-SS.png "Play")
-* Next user chooses an image from computer by clicking "Dosya Seç" button.
-![PUZZLE-Game](resources/images/File-C-SS.png "Folder Choose")
-* Then user has to click "Yükle" button and now user sees the image.
-![PUZZLE-Game](resources/images/Load-SS.png "Upload")
-* After that user clicks "Karıştır" button and game starts.
-![PUZZLE-Game](resources/images/Mix-SS.png "Mix")
-* This is the view when user clicks "Karıştır" button.
-![PUZZLE-Game](resources/images/Mixed-SS.png "Mixed")
-* When user ends swapping image parts to their correct locations by clicking on parts they wanted to change.
-![PUZZLE-Game](resources/images/Complete-SS.png "Complete")
-* Finally game ends, users write their names and their score saves in a folder.
-![PUZZLE-Game](resources/images/Game-End-SS.png "Game End")
-* Users can see their saved score at main menu skor side.
+* User enters array elements by manually or just chooses a number of elements and our program selects random numbers.
+![PSAV](resources/images/Main-SS.png "Play")
+* Next user chooses graph type if they want to see array in the graphs.
+![PSAV](resources/images/File-C-SS.png "Folder Choose")
+* Then user clicks "Grafik Oluştur" button and can see the graph.
+![PSAV](resources/images/Load-SS.png "Upload")
+* After that user can select the animation speed with slider.
+![PSAV](resources/images/Mix-SS.png "Mix")
+* Later that user can select the sorting algorithm in the combo box.
+![PSAV](resources/images/Mixed-SS.png "Mixed")
+* When user clicks "Başlat" button the animatons starts and if user presses "Durdur" button animation stops.
+![PSAV](resources/images/Complete-SS.png "Complete")
+* User can continue with "Devam Et" button or reset with "Sıfırla" button.
+![PSAV](resources/images/Game-End-SS.png "Game End")
+* Also user can see the algorithms complexity and comparison numbers.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
