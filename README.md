@@ -55,20 +55,23 @@ These are what we used to develop our program:
 ## Usage
 
 * User enters array elements by manually or just chooses a number of elements and our program selects random numbers.
-![PSAV](resources/images/Main-SS.png "Play")
+![PSAV](resources/Array.png "Array")
 * Next user chooses graph type if they want to see array in the graphs.
-![PSAV](resources/images/File-C-SS.png "Folder Choose")
+![PSAV](resources/G_Type.png "Graph Type")
 * Then user clicks "Grafik Oluştur" button and can see the graph.
-![PSAV](resources/images/Load-SS.png "Upload")
+![PSAV](resources/G_Done.png "Graph Done")
 * After that user can select the animation speed with slider.
-![PSAV](resources/images/Mix-SS.png "Mix")
+![PSAV](resources/Anim_Slider.png "Animation Slider")
 * Later that user can select the sorting algorithm in the combo box.
-![PSAV](resources/images/Mixed-SS.png "Mixed")
+![PSAV](resources/C_Box.png "Combo Box")
 * When user clicks "Başlat" button the animatons starts and if user presses "Durdur" button animation stops.
-![PSAV](resources/images/Complete-SS.png "Complete")
+![PSAV](resources/Start_n_Stop.png "Start and Stop")
 * User can continue with "Devam Et" button or reset with "Sıfırla" button.
-![PSAV](resources/images/Game-End-SS.png "Game End")
+![PSAV](resources/Cont_n_Reset.png "Continue and Reset")
 * Also user can see the algorithms complexity and comparison numbers.
+![PSAV](resources/Comp_n_Compx.png "Compare and Complexity")
+* And that is how it looks when array are sorted in bar graph.
+![PSAV](resources/Final_Result.png "End Result")
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
