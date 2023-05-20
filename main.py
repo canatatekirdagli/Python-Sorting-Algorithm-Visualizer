@@ -4,10 +4,27 @@ import random
 import time
 
 is_animation_running = False
-
+comparison_label = None  # Karşılaştırma sayısı etiketi
 def bubble_sort(arr):
+    global comparison_label  # Global olarak tanımlanan etiket değişkeni
+
     n = len(arr)
     comparison_count = 0
+
+    if comparison_label is None:
+        bottom_panel = tk.Frame(left_panel, bg='gray')
+        bottom_panel.pack(pady=10)
+        comparison_label = tk.Label(bottom_panel, text="Karşılaştırma Sayısı: 0")
+        comparison_label.pack(side=tk.LEFT, padx=5)
+    else:
+        comparison_label.config(text="Karşılaştırma Sayısı: 0")  # Etiketin metnini sıfırla
+
+    def update_comparison_label(count):
+        comparison_label.config(text=f"Karşılaştırma Sayısı: {count}")
+        comparison_label.update()
+
+    update_comparison_label(0)  # İlk fonksiyon başlangıcında etiketi güncelle
+
     for i in range(n - 1):
         for j in range(0, n - i - 1):
             if not is_animation_running:
@@ -21,15 +38,35 @@ def bubble_sort(arr):
             time.sleep(speed_slider.get())
             window.update()
 
+            # Adım adım karşılaştırma sayısını güncelle ve ekrana yazdır
+            update_comparison_label(comparison_count)
+
     update_display(arr)
     time.sleep(speed_slider.get())
     window.update()
 
-    print("Karşılaştırma Sayısı (bubble_sort):", comparison_count)  # Karşılaştırma sayısını yazdır
+    print("Karşılaştırma Sayısı (bubble_sort):", comparison_count)
 
 def selection_sort(arr):
+    global comparison_label  # Global olarak tanımlanan etiket değişkeni
+
+    if comparison_label is None:
+        bottom_panel = tk.Frame(left_panel, bg='gray')
+        bottom_panel.pack(pady=10)
+        comparison_label = tk.Label(bottom_panel, text="Karşılaştırma Sayısı: 0")
+        comparison_label.pack(side=tk.LEFT, padx=5)
+    else:
+        comparison_label.config(text="Karşılaştırma Sayısı: 0")  # Etiketin metnini sıfırla
+
     n = len(arr)
     comparison_count = 0
+
+    def update_comparison_label(count):
+        comparison_label.config(text=f"Karşılaştırma Sayısı: {count}")
+        comparison_label.update()
+
+    update_comparison_label(0)  # İlk fonksiyon başlangıcında etiketi güncelle
+
     for i in range(n):
         min_idx = i
         for j in range(i + 1, n):
@@ -46,13 +83,32 @@ def selection_sort(arr):
         time.sleep(speed_slider.get())
         window.update()
 
+        # Adım adım karşılaştırma sayısını güncelle ve ekrana yazdır
+        update_comparison_label(comparison_count)
+
+
     update_display(arr)
     time.sleep(speed_slider.get())
     window.update()
 
-    print("Karşılaştırma Sayısı (selection_sort):", comparison_count)  # Karşılaştırma sayısını yazdır
+    print("Karşılaştırma Sayısı (selection_sort):", comparison_count)
 
 def insertion_sort(arr):
+    global comparison_label  # Global olarak tanımlanan etiket değişkeni
+    if comparison_label is None:
+        bottom_panel = tk.Frame(left_panel, bg='gray')
+        bottom_panel.pack(pady=10)
+        comparison_label = tk.Label(bottom_panel, text="Karşılaştırma Sayısı: 0")
+        comparison_label.pack(side=tk.LEFT, padx=5)
+    else:
+        comparison_label.config(text="Karşılaştırma Sayısı: 0")  # Etiketin metnini sıfırla
+
+    def update_comparison_label(count):
+        comparison_label.config(text=f"Karşılaştırma Sayısı: {count}")
+        comparison_label.update()
+
+    update_comparison_label(0)  # İlk fonksiyon başlangıcında etiketi güncelle
+
     n = len(arr)
     comparison_count = 0
     for i in range(1, n):
@@ -68,7 +124,8 @@ def insertion_sort(arr):
             update_display2(arr, ["yellow" if x == j or x == j+1 else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
-
+            # Adım adım karşılaştırma sayısını güncelle ve ekrana yazdır
+            update_comparison_label(comparison_count)
         arr[j + 1] = key
 
     update_display(arr)
@@ -78,61 +135,94 @@ def insertion_sort(arr):
     print("Karşılaştırma Sayısı (insertion_sort):", comparison_count)
 
 def merge_sort(arr):
-    if len(arr) > 1:
-        mid = len(arr) // 2
-        left_half = arr[:mid]
-        right_half = arr[mid:]
+    comparison_count = [0]
 
-        merge_sort(left_half)
-        merge_sort(right_half)
+    global comparison_label
 
-        i = j = k = 0
-        comparison_count = 0  # Karşılaştırma sayısını takip etmek için bir sayaç
+    if comparison_label is None:
+        bottom_panel = tk.Frame(left_panel, bg='gray')
+        bottom_panel.pack(pady=10)
+        comparison_label = tk.Label(bottom_panel, text="Karşılaştırma Sayısı: 0")
+        comparison_label.pack(side=tk.LEFT, padx=5)
+    else:
+        comparison_label.config(text="Karşılaştırma Sayısı: 0")
 
-        while i < len(left_half) and j < len(right_half):
-            if not is_animation_running:
-                return
-            comparison_count += 1  # Her bir karşılaştırma için sayacı artır
+    def update_comparison_label(count):
+        comparison_label.config(text=f"Karşılaştırma Sayısı: {count}")
+        comparison_label.update()
 
-            if left_half[i] < right_half[j]:
+    update_comparison_label(0)
+
+    def merge_sort_helper(arr):
+        if len(arr) > 1:
+            mid = len(arr) // 2
+            left_half = arr[:mid]
+            right_half = arr[mid:]
+
+            merge_sort_helper(left_half)
+            merge_sort_helper(right_half)
+
+            i = j = k = 0
+
+            while i < len(left_half) and j < len(right_half):
+                if not is_animation_running:
+                    return
+                comparison_count[0] += 1
+                if left_half[i] < right_half[j]:
+                    arr[k] = left_half[i]
+                    i += 1
+                else:
+                    arr[k] = right_half[j]
+                    j += 1
+                k += 1
+
+            while i < len(left_half):
+                if not is_animation_running:
+                    return
                 arr[k] = left_half[i]
                 i += 1
-            else:
+                k += 1
+                comparison_count[0] += 1
+            while j < len(right_half):
+                if not is_animation_running:
+                    return
                 arr[k] = right_half[j]
                 j += 1
-            k += 1
+                k += 1
+                comparison_count[0] += 1
 
-        while i < len(left_half):
-            if not is_animation_running:
-                return
-            arr[k] = left_half[i]
-            i += 1
-            k += 1
-            update_display2(arr, ["yellow" if x == i-1 else "red" for x in range(len(arr))])
+            update_display(arr)
             time.sleep(speed_slider.get())
             window.update()
 
-        while j < len(right_half):
-            if not is_animation_running:
-                return
-            arr[k] = right_half[j]
-            j += 1
-            k += 1
-            update_display2(arr, ["yellow" if x == j-1 else "red" for x in range(len(arr))])
-            time.sleep(speed_slider.get())
-            window.update()
+            # Adım adım karşılaştırma sayısını günceller ve ekrana yazdırır
+            update_comparison_label(comparison_count)
 
-        update_display(arr)
-        time.sleep(speed_slider.get())
-        window.update()
+    merge_sort_helper(arr)
 
-        print("Karşılaştırma Sayısı:", comparison_count)  # Karşılaştırma sayısını yazdır
+    print("Toplam Karşılaştırma Sayısı: (merge_sort)", comparison_count[0])
 
 def quick_sort(arr, low, high):
     comparison_count = 0
 
+    global comparison_label
+
+    if comparison_label is None:
+        bottom_panel = tk.Frame(left_panel, bg='gray')
+        bottom_panel.pack(pady=10)
+        comparison_label = tk.Label(bottom_panel, text="Karşılaştırma Sayısı: 0")
+        comparison_label.pack(side=tk.LEFT, padx=5)
+    else:
+        comparison_label.config(text="Karşılaştırma Sayısı: 0")
+
+    def update_comparison_label(count):
+        comparison_label.config(text=f"Karşılaştırma Sayısı: {count}")
+        comparison_label.update()
+
+    update_comparison_label(0)
+
     def _quick_sort(arr, low, high):
-        nonlocal comparison_count  # comparison_count değişkenini iç içe fonksiyon içinde kullanmak için nonlocal anahtar kelimesi kullanılır
+        nonlocal comparison_count
 
         if low < high:
             pi = partition(arr, low, high)
@@ -143,14 +233,16 @@ def quick_sort(arr, low, high):
             window.update()
             comparison_count += (high - low)  # Her bir bölme işlemi için (high - low) kadar karşılaştırma yapılır
 
+            # Adım adım karşılaştırma sayısını güncelle ve ekrana yazdır
+            update_comparison_label(comparison_count)
+
         elif low == 0 and high == len(arr) - 1:
             update_display2(arr, ["yellow" if x == low else "red" for x in range(len(arr))])
             time.sleep(speed_slider.get())
             window.update()
 
     _quick_sort(arr, low, high)
-    print("Karşılaştırma Sayısı: (quick_sort)", comparison_count)
-
+    print("Karşılaştırma Sayısı (quick_sort)", comparison_count)
 
 def partition(arr, low, high):  # quick sort için parçalama işlemi kullanılan adımları gerçekleştirir.
     pivot = arr[high]
