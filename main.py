@@ -457,7 +457,7 @@ graph_button.pack(pady=10)
 # Hız ayarı
 speed_label = tk.Label(left_panel, text="Animasyon Hızı:")
 speed_label.pack(pady=10)
-speed_slider = tk.Scale(left_panel, from_=0.1, to=1.0, resolution=0.1, orient=tk.HORIZONTAL, length=150)
+speed_slider = tk.Scale(left_panel, from_=1.0, to=0.1, resolution=0.1, orient=tk.HORIZONTAL, length=150)
 speed_slider.set(0.5)
 speed_slider.pack()
 
