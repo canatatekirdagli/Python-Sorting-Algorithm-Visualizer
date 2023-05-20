@@ -55,22 +55,47 @@ These are what we used to develop our program:
 ## Usage
 
 * User enters array elements by manually or just chooses a number of elements and our program selects random numbers.
+
 ![PSAV](resources/Array.png "Array")
+
+
 * Next user chooses graph type if they want to see array in the graphs.
+
 ![PSAV](resources/G_Type.png "Graph Type")
+
+
 * Then user clicks "Grafik Oluştur" button and can see the graph.
+
 ![PSAV](resources/G_Done.png "Graph Done")
+
+
 * After that user can select the animation speed with slider.
+
 ![PSAV](resources/Anim_Slider.png "Animation Slider")
+
+
 * Later that user can select the sorting algorithm in the combo box.
+
 ![PSAV](resources/C_Box.png "Combo Box")
+
+
 * When user clicks "Başlat" button the animatons starts and if user presses "Durdur" button animation stops.
+
 ![PSAV](resources/Start_n_Stop.png "Start and Stop")
+
+
 * User can continue with "Devam Et" button or reset with "Sıfırla" button.
+
 ![PSAV](resources/Cont_n_Reset.png "Continue and Reset")
+
+
 * Also user can see the algorithms complexity and comparison numbers.
+
 ![PSAV](resources/Comp_n_Compx.png "Compare and Complexity")
+
+
 * And that is how it looks when array are sorted in bar graph.
+
 ![PSAV](resources/Final_Result.png "End Result")
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
