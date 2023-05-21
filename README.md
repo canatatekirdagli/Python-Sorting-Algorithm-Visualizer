@@ -5,7 +5,7 @@
 <br />
 <div align="center">
   <a href="#readme-top">
-    <img src="resources\images\logo.png" alt="Logo" width="80" height="80">
+    
   </a>
 </div>
 
@@ -49,7 +49,11 @@ These are what we used to develop our program:
 
 ### Installments
 
-* You don't need anything extra to use this program.
+* You need to install tkinter use this program.
+
+```sh
+   pip install tk
+```   
   
 <!-- USAGE EXAMPLES -->
 ## Usage
