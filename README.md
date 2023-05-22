@@ -52,7 +52,7 @@ These are what we used to develop our program:
 * You need to install tkinter use this program.
 
 ```sh
-   pip install tk
+   pip install tkinter
 ```   
   
 <!-- USAGE EXAMPLES -->
