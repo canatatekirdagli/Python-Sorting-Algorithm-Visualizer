@@ -437,22 +437,6 @@ def reset():
     size_spinbox.insert(0, "1")
     is_animation_running = False
 
-def continue_animation():
-    selected_algorithm = algorithm_combo.get()
-    array = create_array()
-    if array is None:
-        return
-
-    global is_animation_running
-    is_animation_running = True
-
-    if selected_algorithm == 'Bubble Sort':
-        bubble_sort(array)
-    elif selected_algorithm == 'Quick Sort':
-        quick_sort(array, 0, len(array)-1)
-
-    is_animation_running = False
-
 window = tk.Tk()
 window.title("Sıralama Animasyonu")
 window.geometry("800x600")
@@ -488,7 +472,7 @@ graph_button.pack(pady=10)
 # Hız ayarı
 speed_label = tk.Label(left_panel, text="Animasyon Hızı:")
 speed_label.pack(pady=10)
-speed_slider = tk.Scale(left_panel, from_=1.0, to=0.1, resolution=0.1, orient=tk.HORIZONTAL, length=150)
+speed_slider = tk.Scale(left_panel, from_=1.0, to=0.1, resolution=0.1, orient=tk.HORIZONTAL, length=150,showvalue=False)
 speed_slider.set(0.5)
 speed_slider.pack()
 
@@ -513,8 +497,6 @@ stop_button.pack(side=tk.LEFT, padx=5)
 bottom_panel = tk.Frame(left_panel, bg='gray')
 bottom_panel.pack(pady=10)
 
-continue_button = ttk.Button(bottom_panel, text='Devam Et', command=continue_animation)
-continue_button.pack(side=tk.LEFT, padx=5)
 
 reset_button = ttk.Button(bottom_panel, text='Sıfırla', command=reset)
 reset_button.pack(side=tk.LEFT, padx=5)
