@@ -1,2 +1,5 @@
-* linguist-vendored linguist-detectable=true linguist-language=Python
-docs/formatter.tlc linguist-documentation=false
+# TLC uzantılı dosyaları yok say
+*.tlc linguist-vendored
+
+# Proje dilini Python olarak belirt
+* linguist-language=Python
