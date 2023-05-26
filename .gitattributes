@@ -1,5 +1,2 @@
-# TLC uzantılı dosyaları yok say
-*.tlc linguist-vendored
-
 # Proje dilini Python olarak belirt
 * linguist-language=Python
