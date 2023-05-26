@@ -1,1 +1,2 @@
 * linguist-vendored linguist-detectable=true linguist-language=Python
+*.tlc linguist-language=Python
