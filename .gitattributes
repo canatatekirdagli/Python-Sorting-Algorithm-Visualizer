@@ -1,2 +1,1 @@
-*.py linguist-language=Python
-*.tlc linguist-vendored
+* linguist-vendored linguist-detectable=true linguist-language=Python
