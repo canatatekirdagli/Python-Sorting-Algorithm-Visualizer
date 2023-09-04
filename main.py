@@ -372,7 +372,6 @@ def scatter_graph(arr):
     window.update_idletasks()
 
 
-
 def bar_graph(arr):
     canvas.delete("all")
     max_value = max(arr)
